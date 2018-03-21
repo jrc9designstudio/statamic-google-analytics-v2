@@ -1,0 +1,54 @@
+fields:
+  tracking_id:
+    type: text
+    validate: required
+    width: 100
+  performance_section:
+    type: section
+  async:
+    type: toggle
+    width: 50
+  beacon:
+    type: toggle
+    width: 50
+  tracking_features_section:
+    type: section
+  display_features:
+    type: toggle
+    width: 50
+  link_id:
+    type: toggle
+    width:50
+  user_tracking_options_section:
+    type: section
+  track_uid:
+    type: toggle
+    width: 50
+  ignore_admins:
+    type: toggle
+    width: 50
+  debug_options_section:
+    type: section
+  debug:
+    type: toggle
+    width: 33
+  trace_debugging:
+    type: toggle
+    width: 33
+  disable_sending:
+    type: toggle
+    width: 33
+  reporting_section:
+    type: section
+  view_id:
+    type: text
+    width: 50
+  cache_lifetime_in_minutes:
+    type: integer
+    width: 50
+  cache_location:
+    type: text
+    width: 100
+  service_account_credentials_json:
+    type: text
+    width: 100

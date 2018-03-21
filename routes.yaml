@@ -1,0 +1,31 @@
+routes:
+  # Dashboard
+  /:
+    uses: index
+    as: index
+
+  /browsers:
+    uses: browsers
+    as: google-analytics.browsers
+
+  /referals:
+    uses: referals
+    as: google-analytics.referals
+
+  /total-visitors-and-page-views:
+    uses: totalVisitorsAndPageViews
+
+  /top-browsers:
+    uses: topBrowsers
+
+  /top-browsers-table:
+    uses: topBrowsersTable
+
+  /top-referrers:
+    uses: topReferrers
+
+  /top-referrers-table:
+    uses: topReferrersTable
+
+  /most-visited-pages:
+    uses: mostVisitedPages
