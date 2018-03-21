@@ -1,5 +1,3 @@
-# Google Analytics V2
-
 ## Requirements
 *Requirement:* Statamic v2.6.x
 *Version:* 2.0.0 Beta 2
