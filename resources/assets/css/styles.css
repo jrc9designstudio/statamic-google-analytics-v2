@@ -5,3 +5,11 @@
 .ga-table {
   margin-bottom: 0;
 }
+
+.ga-table thead {
+  white-space: nowrap;
+}
+
+.ga-table tbody {
+  word-break: break-all;
+}
