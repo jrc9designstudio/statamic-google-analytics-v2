@@ -81,7 +81,7 @@ var ga_chart = {
   },
   methods: {
     getData: function() {
-      this.$http.get(Statamic.cpRoot + '/addons/google-analytics/' + this.endpoint + '?startDate=' + this.startDate + '&endDate=' + this.endDate).success(function(data) {
+      this.$http.get(Statamic.cpRoot + '/addons/google-analytics/ajax/' + this.endpoint + '?startDate=' + this.startDate + '&endDate=' + this.endDate).success(function(data) {
         this.labels = data.labels;
         this.points = data.points;
 
@@ -442,7 +442,7 @@ Vue.component('google-analytics-table', {
             '</div>',
   methods: {
     getData: function() {
-      this.$http.get(Statamic.cpRoot + '/addons/google-analytics/' + this.endpoint +'?startDate=' + this.startDate + '&endDate=' + this.endDate).success(function(data) {
+      this.$http.get(Statamic.cpRoot + '/addons/google-analytics/ajax/' + this.endpoint +'?startDate=' + this.startDate + '&endDate=' + this.endDate).success(function(data) {
         this.labels = data.labels;
         this.rows = data.rows;
       });

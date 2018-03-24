@@ -12,7 +12,9 @@ class ReferalsWidget extends Widget {
    */
   public function html() {
     $chart = $this->getParam('chart', 'doughnut');
+    $labels = $this->getParam('labels', 'right');
+    $dates = $this->getParam('dates', 'show');
 
-    return $this->view('widget-referals', compact('chart'));
+    return $this->view('widget-referals', compact('chart', 'labels', 'dates'));
   }
 }

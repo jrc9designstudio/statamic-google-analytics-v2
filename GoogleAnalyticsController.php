@@ -37,6 +37,10 @@ class GoogleAnalyticsController extends Controller {
     return $this->view('index');
   }
 
+  public function pageViews() {
+    return $this->view('page-views');
+  }
+
   public function browsers() {
     return $this->view('browsers');
   }

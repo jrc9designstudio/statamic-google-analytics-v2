@@ -11,6 +11,8 @@ class MostVisitedWidget extends Widget {
    * @return string
    */
   public function html() {
-    return $this->view('widget-most-visited');
+    $dates = $this->getParam('dates', 'show');
+
+    return $this->view('widget-most-visited', compact('dates'));
   }
 }

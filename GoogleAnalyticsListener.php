@@ -24,6 +24,7 @@ class GoogleAnalyticsListener extends Listener {
 
       // Add second level navigation items to it
       $store->add(function ($item) {
+        $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
         $item->add(Nav::item('Browsers')->route('google-analytics.browsers'));
         $item->add(Nav::item('Referals')->route('google-analytics.referals'));
         $item->add(Nav::item('Settings')->route('addon.settings', 'google-analytics'));

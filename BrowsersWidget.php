@@ -12,7 +12,9 @@ class BrowsersWidget extends Widget {
    */
   public function html() {
     $chart = $this->getParam('chart', 'doughnut');
+    $labels = $this->getParam('labels', 'right');
+    $dates = $this->getParam('dates', 'show');
 
-    return $this->view('widget-browsers', compact('chart'));
+    return $this->view('widget-browsers', compact('chart', 'labels', 'dates'));
   }
 }

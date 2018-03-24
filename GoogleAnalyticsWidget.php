@@ -11,6 +11,8 @@ class GoogleAnalyticsWidget extends Widget {
    * @return string
    */
   public function html() {
-    return $this->view('widget');
+    $dates = $this->getParam('dates', 'show');
+
+    return $this->view('widget', compact('dates'));
   }
 }

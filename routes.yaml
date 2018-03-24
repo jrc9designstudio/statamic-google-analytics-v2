@@ -12,20 +12,24 @@ routes:
     uses: referals
     as: google-analytics.referals
 
-  /total-visitors-and-page-views:
+  /page-views:
+    uses: pageViews
+    as: google-analytics.page-views
+
+  /ajax/total-visitors-and-page-views:
     uses: totalVisitorsAndPageViews
 
-  /top-browsers:
+  /ajax/top-browsers:
     uses: topBrowsers
 
-  /top-browsers-table:
+  /ajax/top-browsers-table:
     uses: topBrowsersTable
 
-  /top-referrers:
+  /ajax/top-referrers:
     uses: topReferrers
 
-  /top-referrers-table:
+  /ajax/top-referrers-table:
     uses: topReferrersTable
 
-  /most-visited-pages:
+  /ajax/most-visited-pages:
     uses: mostVisitedPages

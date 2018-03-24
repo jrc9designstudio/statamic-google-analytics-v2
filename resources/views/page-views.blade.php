@@ -13,12 +13,8 @@
         <google-analytics-line-chart title="Visitors & Page Views" endpoint="total-visitors-and-page-views" date-picker="hide"></google-analytics-line-chart>
       </div>
 
-      <div class="ga-widget ga-widget-last widget half">
-        <google-analytics-doughnut-chart title="Top Referrers" endpoint="top-referrers" label-position="right" date-picker="hide"></google-analytics-horizontal-bar-chart>
-      </div>
-
-      <div class="ga-widget ga-widget-last widget half">
-        <google-analytics-doughnut-chart title="Top Browsers" endpoint="top-browsers" label-position="right" date-picker="hide"></google-analytics-horizontal-bar-chart>
+      <div class="ga-widget ga-widget-last widget full">
+        <google-analytics-table title="Most Visited Pages" endpoint="most-visited-pages" date-picker="hide"></google-analytics-table>
       </div>
     </div>
   </div>
