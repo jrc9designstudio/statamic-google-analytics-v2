@@ -32,5 +32,5 @@ return [
     'cache_location' => 'Cache Location',
     'cache_location_instruct' => 'Where we should store the cache, defaults to the cache folder in the local folder: `../cache/laravel-google-analytics/google-cache/`',
     'service_account_credentials_json' => 'Service Account Credentials JSON File Location',
-    'service_account_credentials_json_instruct' => 'Where we can find the service account credentials file, defaults to the addon settings folder inside the sites folder: `../../site/settings/addons/google-analytics-credentials.json`. See [Laravel Analytics Github Readme](https://github.com/spatie/laravel-analytics#how-to-obtain-the-credentials-to-communicate-with-google-analytics) to see how to get this JSON file.'
+    'service_account_credentials_json_instruct' => 'Where we can find the service account credentials file, defaults to the addon settings folder inside the sites folder: `../../site/settings/addons/google-analytics-credentials.json`. See [the docs](https://statamic.com/marketplace/addons/google-analytics/docs) to see how to get this JSON file.'
 ];
