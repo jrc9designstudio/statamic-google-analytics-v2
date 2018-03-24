@@ -5,16 +5,21 @@ namespace Statamic\Addons\GoogleAnalytics;
 use Statamic\Extend\Widget;
 
 class BrowsersWidget extends Widget {
-  /**
-   * The HTML that should be shown in the widget
-   *
-   * @return string
-   */
-  public function html() {
-    $chart = $this->getParam('chart', 'doughnut');
-    $labels = $this->getParam('labels', 'right');
-    $dates = $this->getParam('dates', 'show');
+  private $googleanalytics;
 
-    return $this->view('widget-browsers', compact('chart', 'labels', 'dates'));
+  public function __construct(GoogleAnalytics $googleanalytics) {
+    $this->googleanalytics = $googleanalytics;
+  }
+  
+  public function html() {
+    $role_handels = $this->getConfig('roles_with_access');
+    
+    if ($this->googleanalytics->accessCheck($role_handels)) {
+      $chart = $this->getParam('chart', 'doughnut');
+      $labels = $this->getParam('labels', 'right');
+      $dates = $this->getParam('dates', 'show');
+  
+      return $this->view('widget-browsers', compact('chart', 'labels', 'dates'));
+    }
   }
 }

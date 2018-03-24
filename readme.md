@@ -110,5 +110,18 @@ Tye pipe `|` below indicates options, only one of the options should be used.
   dates: hide
 ```
 
+## Access Restrictions
+By default anybody with *CP Access* will be able to see Google Analytics reports.
+
+If you want to restrict what users can see the Google Analytics reports you can the slugs of the roles you wish to grant access to on the settins page under `Roles with Access`.
+
+Example:
+```
+roles_with_access:
+  - admin
+  - blog-editor
+  - editor
+```
+
 ## Add Blockers
 - uBlock Origin, and possibly other addons of this type can cause the scripts this addon use to not load. If you disable the plugin for your domain the scripts should load, and the addon should work.

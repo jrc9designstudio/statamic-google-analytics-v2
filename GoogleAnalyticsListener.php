@@ -7,6 +7,12 @@ use Statamic\API\User;
 use Statamic\Extend\Listener;
 
 class GoogleAnalyticsListener extends Listener {
+  private $googleanalytics;
+
+  public function __construct(GoogleAnalytics $googleanalytics) {
+    $this->googleanalytics = $googleanalytics;
+  }
+  
   public $events = [
     'cp.nav.created' => 'addNavItems',
     'cp.add_to_head' => 'addAssets',
@@ -16,25 +22,29 @@ class GoogleAnalyticsListener extends Listener {
    * @param \Statamic\CP\Navigation\Nav $nav
    */
   public function addNavItems($nav) {
-    // Create the first level navigation item
-    $store = Nav::item('Google Analytics')->route('index')->icon('line-graph');
-
-    // Add second level navigation items to it
-    $store->add(function ($item) {
-      $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
-      $item->add(Nav::item('Browsers')->route('google-analytics.browsers'));
-      $item->add(Nav::item('Referals')->route('google-analytics.referals'));
-      
-      $user = User::getCurrent();
-      
-      if ($user && $user->isSuper()) {
-        $item->add(Nav::item('Settings')->route('addon.settings', 'google-analytics'));
-      }
-    });
-
-    // Finally, add our first level navigation item
-    // to the navigation under the 'tools' section.
-    $nav->addTo('tools', $store);
+    $role_handels = $this->getConfig('roles_with_access');
+    
+    if ($this->googleanalytics->accessCheck($role_handels)) {
+      // Create the first level navigation item
+      $store = Nav::item('Google Analytics')->route('index')->icon('line-graph');
+  
+      // Add second level navigation items to it
+      $store->add(function ($item) {
+        $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
+        $item->add(Nav::item('Browsers')->route('google-analytics.browsers'));
+        $item->add(Nav::item('Referals')->route('google-analytics.referals'));
+        
+        $user = User::getCurrent();
+        
+        if ($user && $user->isSuper()) {
+          $item->add(Nav::item('Settings')->route('addon.settings', 'google-analytics'));
+        }
+      });
+  
+      // Finally, add our first level navigation item
+      // to the navigation under the 'tools' section.
+      $nav->addTo('tools', $store);
+    }
   }
 
   /**

@@ -3,13 +3,18 @@
 namespace Statamic\Addons\GoogleAnalytics;
 
 use Log;
-use Analytics;
 use Carbon;
-use Statamic\API\User;
+use Analytics;
 use JRC9DS\Analytics\Period;
 use Statamic\Extend\Controller;
 
 class GoogleAnalyticsController extends Controller {
+  private $googleanalytics;
+
+  public function __construct(GoogleAnalytics $googleanalytics) {
+    $this->googleanalytics = $googleanalytics;
+  }
+  
   private $colours = [
     '#54151a',
     '#585b57',
@@ -34,22 +39,32 @@ class GoogleAnalyticsController extends Controller {
   ];
 
   public function index() {
+    $this->accessCheck();
+    
     return $this->view('index');
   }
 
   public function pageViews() {
+    $this->accessCheck();
+    
     return $this->view('page-views');
   }
 
   public function browsers() {
+    $this->accessCheck();
+    
     return $this->view('browsers');
   }
 
   public function referals() {
+    $this->accessCheck();
+    
     return $this->view('referals');
   }
 
   public function totalVisitorsAndPageViews() {
+    $this->accessCheck();
+    
     try {
       $period = $this->getPeriod();
 
@@ -80,6 +95,8 @@ class GoogleAnalyticsController extends Controller {
   }
 
   public function topBrowsers() {
+    $this->accessCheck();
+    
     try {
       $period = $this->getPeriod();
 
@@ -99,6 +116,8 @@ class GoogleAnalyticsController extends Controller {
   }
 
   public function topBrowsersTable() {
+    $this->accessCheck();
+    
     try {
       $period = $this->getPeriod();
 
@@ -118,6 +137,8 @@ class GoogleAnalyticsController extends Controller {
   }
 
   public function topReferrers() {
+    $this->accessCheck();
+    
     try {
       $period = $this->getPeriod();
 
@@ -138,6 +159,8 @@ class GoogleAnalyticsController extends Controller {
   }
 
   public function topReferrersTable() {
+    $this->accessCheck();
+    
     try {
       $period = $this->getPeriod();
 
@@ -157,6 +180,8 @@ class GoogleAnalyticsController extends Controller {
   }
 
   public function mostVisitedPages() {
+    $this->accessCheck();
+    
     try {
       $period = $this->getPeriod();
 
@@ -176,6 +201,8 @@ class GoogleAnalyticsController extends Controller {
   }
 
   private function getPeriod() {
+    $this->accessCheck();
+    
     $request = request();
 
     $startDate = $request->get('startDate', null);
@@ -227,7 +254,7 @@ class GoogleAnalyticsController extends Controller {
       return '#FF1B2D';
     } else if (preg_match('/android/i', $label)) {
       return '#A4C439';
-    } else if (preg_match('/^(www|m|l|lm\.)?facebook/i', $label)) {
+    } else if (preg_match('/^(www|m|l|lm)?(\.)?(facebook|messenger)/i', $label)) {
       return '#3b5998';
     } else if (preg_match('/^(www\.)?twitter|t\.co\//i', $label)) {
       return '#1da1f2';
@@ -241,7 +268,7 @@ class GoogleAnalyticsController extends Controller {
       return '#007bb5';
     } else if (preg_match('/^plus\.google/i', $label)) {
       return '#db4437';
-    } else if (preg_match('/^(www\.)?google/i', $label)) {
+    } else if (preg_match('/^(www\.)?(google|goo\.gl)/i', $label)) {
       return '#4285f4';
     } else if (preg_match('/^(www\.)?snapchat/i', $label)) {
       return '#fffc00';
@@ -255,6 +282,14 @@ class GoogleAnalyticsController extends Controller {
       return '#02b875';
     } else {
       return $this->colours[$key];
+    }
+  }
+  
+  private function accessCheck() {
+    $role_handels = $this->getConfig('roles_with_access');
+    
+    if (!$this->googleanalytics->accessCheck($role_handels)) {
+      abort(403, 'Access denied');
     }
   }
 }
