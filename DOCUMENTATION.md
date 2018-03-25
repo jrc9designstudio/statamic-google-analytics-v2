@@ -106,8 +106,9 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 ```
 - 
   type: GoogleAnalytics.Referals
-  width: half
-  dates: hide
+  width: half | full
+  type: doughnut | bar | horizontal-bar
+  dates: show | hide
 ```
 
 ## Access Restrictions
