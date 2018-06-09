@@ -10,7 +10,7 @@
 
     <div class="widgets">
       <div class="ga-widget widget full">
-        <google-analytics-line-chart title="Visitors & Page Views" endpoint="total-visitors-and-page-views" date-picker="hide"></google-analytics-line-chart>
+        <google-analytics-line-chart title="Visitors & Page Views" endpoint="total-visitors-and-page-views" date-picker="hide" label-position="bottom"></google-analytics-line-chart>
       </div>
 
       <div class="ga-widget ga-widget-last widget half">

@@ -7,29 +7,30 @@ routes:
   /browsers:
     uses: browsers
     as: google-analytics.browsers
-
   /referals:
     uses: referals
     as: google-analytics.referals
-
   /page-views:
     uses: pageViews
     as: google-analytics.page-views
+  # /demographics:
+  #   uses: demographics
+  #   as: google-analytics.demographics
+  /location:
+    uses: location
+    as: google-analytics.location
 
   /ajax/total-visitors-and-page-views:
     uses: totalVisitorsAndPageViews
-
   /ajax/top-browsers:
     uses: topBrowsers
-
   /ajax/top-browsers-table:
     uses: topBrowsersTable
-
   /ajax/top-referrers:
     uses: topReferrers
-
   /ajax/top-referrers-table:
     uses: topReferrersTable
-
   /ajax/most-visited-pages:
     uses: mostVisitedPages
+  /ajax/location:
+    uses: ajaxLocation

@@ -1,5 +1,5 @@
 {
-  "name": "jrc9designstudio/statamic-google-analytics",
+  "name": "jcohlmeyer/statamic-google-analytics",
   "require": {
     "jrc9designstudio/statamic-laravel-analytics": "^1.0.0"
   }

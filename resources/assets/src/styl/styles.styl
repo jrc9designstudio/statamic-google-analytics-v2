@@ -1,0 +1,67 @@
+// Add some extra space below the last card on the page
+.ga-widget-last
+  margin-bottom 40px
+
+// No whitespace after last table row in card
+.ga-table
+  margin-bottom 0
+
+// Do not wrap table headlines (esp when long data such as urls)
+.ga-table thead
+  white-space nowrap
+
+// Break all long words in tables to prevent horizontal scroll
+// This includes long urls
+.ga-table tbody
+  word-break break-all
+
+// This fixes issues with canvas width and grid / flexbox
+// https://github.com/chartjs/Chart.js/issues/4156#issuecomment-295180128
+.content,
+.w-full,
+.ga-widget
+  min-width 0
+
+.ga-chart-standalone
+  position relative
+
+.ga-canvas-container
+  height 25vw
+  min-height 250px
+
+// Hide the default field label (we add our own we style)
+.google_analytics-fieldtype > .field-inner > label
+  display none !important
+
+// Size the map svg
+.google-analytics-map-svg
+  height auto
+  width 100%
+  path
+    transition fill .1s ease-in
+    will-change fill
+
+// Styles for the tooltip
+.google-maps-map-tooltip
+  background-color #fff
+  background-color rgba(255,255,255,.96)
+  border 1px solid rgba(0,0,0,.075)
+  border-radius 4px
+  box-shadow 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07)
+  display block
+  font-size 75%
+  margin-top 5px
+  opacity 0
+  padding 8px
+  position fixed
+  transform scale(.8)
+  transform-origin 50% 10%
+  transition transform .1s ease-in, opacity .1s ease-in
+  width 240px
+  will-change transform, opacity
+  &.open
+    opacity 1
+    transform scale(1)
+  h2, p
+    margin 0 0 .25em
+    padding 0

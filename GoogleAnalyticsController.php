@@ -14,7 +14,7 @@ class GoogleAnalyticsController extends Controller {
   public function __construct(GoogleAnalytics $googleanalytics) {
     $this->googleanalytics = $googleanalytics;
   }
-  
+
   private $colours = [
     '#54151a',
     '#585b57',
@@ -38,52 +38,106 @@ class GoogleAnalyticsController extends Controller {
     '#465975'
   ];
 
+  // Page filter ga:pagePath
+
   public function index() {
     $this->accessCheck();
-    
+
     return $this->view('index');
   }
 
   public function pageViews() {
     $this->accessCheck();
-    
+
     return $this->view('page-views');
   }
 
   public function browsers() {
     $this->accessCheck();
-    
+
     return $this->view('browsers');
   }
 
   public function referals() {
     $this->accessCheck();
-    
+
     return $this->view('referals');
+  }
+
+  // public function demographics() {
+  //   $period = $this->getPeriod();
+
+  //   dump(Analytics::performQuery($period, 'ga:sessions', [ 'dimensions' => 'ga:userAgeBracket', 'sort' => '-ga:sessions' ]));
+
+  //   $this->accessCheck();
+
+  //   return $this->view('demographics');
+  // }
+
+  public function location() {
+    $this->accessCheck();
+
+    return $this->view('location');
   }
 
   public function totalVisitorsAndPageViews() {
     $this->accessCheck();
-    
+
     try {
+      $request = request();
       $period = $this->getPeriod();
-
-      $totalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews($period)->toArray();
-
-      $visitors = array_column($totalVisitorsAndPageViews, 'visitors');
-      $pageViews = array_column($totalVisitorsAndPageViews, 'pageViews');
-      $labels = array();
-
-      // Find out if the dates span years, if so include the year in the labels
-      if (reset($totalVisitorsAndPageViews)['date']->formatLocalized('%Y') == end($totalVisitorsAndPageViews)['date']->formatLocalized('%Y')) {
-        foreach($totalVisitorsAndPageViews as $data) {
-          $labels[] = $data['date']->formatLocalized('%b %d');
-        }
-      } else {
-        foreach($totalVisitorsAndPageViews as $data) {
-          $labels[] = $data['date']->formatLocalized('%b %d, %Y');
-        }
+      $url = $request->get('url', null);
+      $params = [ 'dimensions' => 'ga:date' ];
+      if ($url) {
+        $params['filters'] = 'ga:pagePath==' . $url;
       }
+
+      $totalVisitorsAndPageViews = Analytics::performQuery(
+            $period,
+            'ga:users,ga:pageviews',
+            $params
+        );
+
+        $visitors = collect($totalVisitorsAndPageViews['rows'] ?? [])->map(function (array $dateRow) {
+            return (int) $dateRow[1];
+        });
+
+        $pageViews = collect($totalVisitorsAndPageViews['rows'] ?? [])->map(function (array $dateRow) {
+            return (int) $dateRow[2];
+        });
+
+        // if (reset($totalVisitorsAndPageViews['rows'])[0]->formatLocalized('%Y') == end($totalVisitorsAndPageViews['rows'])[0]->formatLocalized('%Y')) {
+        //   $datesSpanYears = false;
+        // } else {
+        //   $datesSpanYears = true;
+        // }
+
+        $labels = collect($totalVisitorsAndPageViews['rows'] ?? [])->map(function (array $dateRow) {
+            return $this->periodSpansYears() ? Carbon::createFromFormat('Ymd', $dateRow[0])->formatLocalized('%b %d, %Y') : Carbon::createFromFormat('Ymd', $dateRow[0])->formatLocalized('%b %d');
+        });
+
+        // return collect($response['rows'] ?? [])->map(function (array $dateRow) {
+        //     return [
+        //         'date' => Carbon::createFromFormat('Ymd', $dateRow[0]),
+        //         'visitors' => (int) $dateRow[1],
+        //         'pageViews' => (int) $dateRow[2],
+        //     ];
+        // });
+
+      // $visitors = array_column($totalVisitorsAndPageViews, 'visitors');
+      // $pageViews = array_column($totalVisitorsAndPageViews, 'pageViews');
+      // $labels = array();
+
+      // // Find out if the dates span years, if so include the year in the labels
+      // if (reset($totalVisitorsAndPageViews)['date']->formatLocalized('%Y') == end($totalVisitorsAndPageViews)['date']->formatLocalized('%Y')) {
+      //   foreach($totalVisitorsAndPageViews as $data) {
+      //     $labels[] = $data['date']->formatLocalized('%b %d');
+      //   }
+      // } else {
+      //   foreach($totalVisitorsAndPageViews as $data) {
+      //     $labels[] = $data['date']->formatLocalized('%b %d, %Y');
+      //   }
+      // }
 
       return [
         'labels' => $labels,
@@ -96,7 +150,7 @@ class GoogleAnalyticsController extends Controller {
 
   public function topBrowsers() {
     $this->accessCheck();
-    
+
     try {
       $period = $this->getPeriod();
 
@@ -117,7 +171,7 @@ class GoogleAnalyticsController extends Controller {
 
   public function topBrowsersTable() {
     $this->accessCheck();
-    
+
     try {
       $period = $this->getPeriod();
 
@@ -138,11 +192,12 @@ class GoogleAnalyticsController extends Controller {
 
   public function topReferrers() {
     $this->accessCheck();
-    
+
     try {
       $period = $this->getPeriod();
 
       $topReferrers = Analytics::fetchTopReferrers($period)->toArray();
+      // Analytics::performQuery($period, 'ga:sessions,ga:pageviews,ga:sessionDuration,ga:exits', [ 'dimensions' => 'ga:source,ga:medium', 'sort' => '-ga:sessions' ]);
 
       $labels = array_map(function($label) {
         return strlen($label) > 20 ? substr($label,0,20)."..." : $label;
@@ -160,7 +215,7 @@ class GoogleAnalyticsController extends Controller {
 
   public function topReferrersTable() {
     $this->accessCheck();
-    
+
     try {
       $period = $this->getPeriod();
 
@@ -181,7 +236,7 @@ class GoogleAnalyticsController extends Controller {
 
   public function mostVisitedPages() {
     $this->accessCheck();
-    
+
     try {
       $period = $this->getPeriod();
 
@@ -200,9 +255,42 @@ class GoogleAnalyticsController extends Controller {
     }
   }
 
-  private function getPeriod() {
+  public function ajaxLocation() {
     $this->accessCheck();
-    
+
+    try {
+      $period = $this->getPeriod();
+
+      $data = Analytics::performQuery($period, 'ga:sessions,ga:pageViews,ga:domainLookupTime,ga:pageLoadTime,ga:pageDownloadTime,ga:serverConnectionTime,ga:serverResponseTime,ga:domInteractiveTime', [ 'dimensions' => 'ga:country' ]);
+      $keyedData = [];
+
+      $labels = array_map(function($label) {
+        $labelValue = $this->camelToTitle(preg_replace('/^ga:/', '', $label['name']));
+        return preg_match('/time/i', $labelValue) ? ($labelValue . ' (ms)') : $labelValue;
+      }, $data['modelData']['columnHeaders']);
+
+      foreach ($data->rows as $value) {
+        $arry = [];
+
+        $arry['country'] = $value[0];
+
+        for ($i = 1; $i < sizeof($data['modelData']['columnHeaders']); $i++) {
+          $arry[preg_replace('/^ga:/', '', $data['modelData']['columnHeaders'][$i]['name'])] = intval($value[$i]);
+        }
+
+        $keyedData[$value[0]] = $arry;
+      }
+
+      return [
+        'rows' => $keyedData,
+        'labels' => $labels,
+      ];
+    } catch (\Exception $e) {
+        return $e;
+    }
+  }
+
+  private function getPeriod() {
     $request = request();
 
     $startDate = $request->get('startDate', null);
@@ -215,13 +303,23 @@ class GoogleAnalyticsController extends Controller {
       try {
         $period = Period::create($startDate, $endDate);
       } catch (\Exception $e) {
-        $period = Period::days(7);
+        $period = Period::days(30);
       }
     } else {
-      $period = Period::days(7);
+      $period = Period::days(30);
     }
 
     return $period;
+  }
+
+  private function periodSpansYears() {
+    $period = $this->getPeriod();
+
+    if ($period->startDate->formatLocalized('%Y') != $period->endDate->formatLocalized('%Y')) {
+      return true;
+    }
+
+    return false;
   }
 
   private function camelToTitle($camelStr) {
@@ -284,11 +382,9 @@ class GoogleAnalyticsController extends Controller {
       return $this->colours[$key];
     }
   }
-  
+
   private function accessCheck() {
-    $role_handels = $this->getConfig('roles_with_access');
-    
-    if (!$this->googleanalytics->accessCheck($role_handels)) {
+    if (!$this->googleanalytics->accessCheck()) {
       abort(403, 'Access denied');
     }
   }

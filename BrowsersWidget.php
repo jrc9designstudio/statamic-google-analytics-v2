@@ -10,15 +10,13 @@ class BrowsersWidget extends Widget {
   public function __construct(GoogleAnalytics $googleanalytics) {
     $this->googleanalytics = $googleanalytics;
   }
-  
+
   public function html() {
-    $role_handels = $this->getConfig('roles_with_access');
-    
-    if ($this->googleanalytics->accessCheck($role_handels)) {
+    if ($this->googleanalytics->accessCheck()) {
       $chart = $this->getParam('chart', 'doughnut');
       $labels = $this->getParam('labels', 'right');
       $dates = $this->getParam('dates', 'show');
-  
+
       return $this->view('widget-browsers', compact('chart', 'labels', 'dates'));
     }
   }

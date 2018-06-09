@@ -2,7 +2,8 @@
 *Requirement:* Statamic v2.6.x
 
 ## Installation
-Rename the folder `GoogleAnalytics` and copy it to your `site/addons` folder
+1. Rename the folder `GoogleAnalytics` and copy it to your `site/addons` folder
+2. Run `php please update:addons` to install the depencency.
 
 ## Tracking Configuration
 Use the settings to configure your tracking id and other Google Analytics settings or create a settings file in `site/settings/addons/google_analytics.yaml`
@@ -79,7 +80,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 
 ### Visitiors & Page Views
 ```
-- 
+-
   type: GoogleAnalytics
   width: half | full
   dates: show | hide
@@ -87,7 +88,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 
 ### MostVisited
 ```
-- 
+-
   type: GoogleAnalytics.MostVisited
   width: half | full
   dates: show | hide
@@ -95,7 +96,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 
 ### Browsers
 ```
-- 
+-
   type: GoogleAnalytics.Browsers
   width: half | full
   type: doughnut | bar | horizontal-bar
@@ -104,7 +105,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 
 ### Referals
 ```
-- 
+-
   type: GoogleAnalytics.Referals
   width: half | full
   type: doughnut | bar | horizontal-bar

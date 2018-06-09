@@ -12,11 +12,9 @@ class MostVisitedWidget extends Widget {
   }
 
   public function html() {
-    $role_handels = $this->getConfig('roles_with_access');
-    
-    if ($this->googleanalytics->accessCheck($role_handels)) {
+    if ($this->googleanalytics->accessCheck()) {
       $dates = $this->getParam('dates', 'show');
-  
+
       return $this->view('widget-most-visited', compact('dates'));
     }
   }

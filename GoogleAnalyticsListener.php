@@ -12,7 +12,7 @@ class GoogleAnalyticsListener extends Listener {
   public function __construct(GoogleAnalytics $googleanalytics) {
     $this->googleanalytics = $googleanalytics;
   }
-  
+
   public $events = [
     'cp.nav.created' => 'addNavItems',
     'cp.add_to_head' => 'addAssets',
@@ -22,25 +22,26 @@ class GoogleAnalyticsListener extends Listener {
    * @param \Statamic\CP\Navigation\Nav $nav
    */
   public function addNavItems($nav) {
-    $role_handels = $this->getConfig('roles_with_access');
-    
-    if ($this->googleanalytics->accessCheck($role_handels)) {
+    if ($this->googleanalytics->accessCheck()) {
       // Create the first level navigation item
       $store = Nav::item('Google Analytics')->route('index')->icon('line-graph');
-  
+
       // Add second level navigation items to it
       $store->add(function ($item) {
-        $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
         $item->add(Nav::item('Browsers')->route('google-analytics.browsers'));
+        /* $item->add(Nav::item('Demographics')->route('google-analytics.demographics')); */
+        $item->add(Nav::item('Location')->route('google-analytics.location'));
+        $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
         $item->add(Nav::item('Referals')->route('google-analytics.referals'));
-        
+
+
         $user = User::getCurrent();
-        
+
         if ($user && $user->isSuper()) {
           $item->add(Nav::item('Settings')->route('addon.settings', 'google-analytics'));
         }
       });
-  
+
       // Finally, add our first level navigation item
       // to the navigation under the 'tools' section.
       $nav->addTo('tools', $store);
@@ -52,8 +53,8 @@ class GoogleAnalyticsListener extends Listener {
    * @return string css & js link
    */
   public function addAssets() {
-    $html = $this->js->tag('Chart.min');
-    $html .= $this->css->tag('styles');
+    $html = $this->js->tag('chart.min.js?v=2.7.1');
+    $html .= $this->css->tag('styles.css?v=2.1.0');
     return $html;
   }
 }
