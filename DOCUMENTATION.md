@@ -1,5 +1,5 @@
 ## Requirements
-*Requirement:* Statamic v2.6.x
+*Requirement:* Statamic v2.9.x
 
 ## Installation
 1. Rename the folder `GoogleAnalytics` and copy it to your `site/addons` folder
@@ -111,6 +111,9 @@ Tye pipe `|` below indicates options, only one of the options should be used.
   type: doughnut | bar | horizontal-bar
   dates: show | hide
 ```
+
+## Page / Entity Stats
+To see page view stats on pages and entities add the Google Analytics field to your fieldset.
 
 ## Access Restrictions
 By default anybody with *CP Access* will be able to see Google Analytics reports.
