@@ -14,7 +14,7 @@ class GoogleAnalytics {
   }
 
   public function accessCheck() {
-    $role_handels = $this->getConfig('roles_with_access');
+    $role_handels = $this->getConfig('roles_with_access', []);
 
     $user = User::getCurrent();
 
