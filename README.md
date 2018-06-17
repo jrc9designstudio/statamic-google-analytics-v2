@@ -1,6 +1,6 @@
 # Google Analytics for Statamic 2
 - Requirement: Statamic v2.6.x
-- Version: 2.1.1
+- Version: 2.2.0
 
 ## What is this?
 Add Google Analytics configuration and reporting to Statamic 2

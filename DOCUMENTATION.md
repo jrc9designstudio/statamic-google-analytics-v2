@@ -115,6 +115,12 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 ## Page / Entity Stats
 To see page view stats on pages and entities add the Google Analytics field to your fieldset.
 
+## Page Hits (Tag)
+If you want to show how many hits a page has you can use the page hits tag: `{{ google_analytics:hits }}`
+
+If you want to sort your collection entities by page hits you can do so using the sort param. `{{ collection:blog sort="{ google_analytics:hits }" }}`
+
+
 ## Access Restrictions
 By default anybody with *CP Access* will be able to see Google Analytics reports.
 
