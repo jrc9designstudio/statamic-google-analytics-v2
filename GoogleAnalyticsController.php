@@ -10,9 +10,11 @@ use Statamic\Extend\Controller;
 
 class GoogleAnalyticsController extends Controller {
   private $googleanalytics;
+  private $setup;
 
   public function __construct(GoogleAnalytics $googleanalytics) {
     $this->googleanalytics = $googleanalytics;
+    $this->setup = $this->getConfigInt('view_id');
   }
 
   private $colours = [
@@ -43,25 +45,25 @@ class GoogleAnalyticsController extends Controller {
   public function index() {
     $this->accessCheck();
 
-    return $this->view('index');
+    return $this->view('index')->with('setup', $this->setup);
   }
 
   public function pageViews() {
     $this->accessCheck();
 
-    return $this->view('page-views');
+    return $this->view('page-views')->with('setup', $this->setup);
   }
 
   public function browsers() {
     $this->accessCheck();
 
-    return $this->view('browsers');
+    return $this->view('browsers')->with('setup', $this->setup);
   }
 
   public function referals() {
     $this->accessCheck();
 
-    return $this->view('referals');
+    return $this->view('referals')->with('setup', $this->setup);
   }
 
   // public function demographics() {
@@ -77,7 +79,7 @@ class GoogleAnalyticsController extends Controller {
   public function location() {
     $this->accessCheck();
 
-    return $this->view('location');
+    return $this->view('location')->with('setup', $this->setup);
   }
 
   public function totalVisitorsAndPageViews() {

@@ -54,7 +54,7 @@ class GoogleAnalyticsListener extends Listener {
    */
   public function addAssets() {
     $html = $this->js->tag('chart.min.js?v=2.7.2');
-    $html .= $this->css->tag('styles.css?v=2.2.1');
+    $html .= $this->css->tag('styles.css?v=2.2.2');
     return $html;
   }
 }

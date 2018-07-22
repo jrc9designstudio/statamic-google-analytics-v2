@@ -1,6 +1,12 @@
 @extends('layout')
 
 @section('content')
+  @if(!$setup)
+    <div class="alert alert-warning" role="alert">
+      <p>Reporting not yet setup. You must <a href="https://statamic.com/marketplace/addons/google-analytics/docs#reporting-setup" target="_blank">set up reporting</a> before you can see reports here.</p>
+    </div>
+  @endif
+
   <div class="dashboard">
     <div class="flexy mb-24">
       <h1 class="fill">Google Analytics</h1>
