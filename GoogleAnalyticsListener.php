@@ -53,8 +53,8 @@ class GoogleAnalyticsListener extends Listener {
    * @return string css & js link
    */
   public function addAssets() {
-    $html = $this->js->tag('chart.min.js?v=2.7.1');
-    $html .= $this->css->tag('styles.css?v=2.1.0');
+    $html = $this->js->tag('chart.min.js?v=2.7.2');
+    $html .= $this->css->tag('styles.css?v=2.2.1');
     return $html;
   }
 }

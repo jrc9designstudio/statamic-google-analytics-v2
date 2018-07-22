@@ -22,7 +22,7 @@ return [
     'debug_instruct' => 'Note: The debug version of analytics.js should only be used during development and testing, as it\'s quite a bit larger than analytics.js and will slow down the loading of your page.',
     'trace_debugging' => 'Enable Trace Debugging',
     'trace_debugging_instruct' => 'Enabling trace debugging will output more verbose information to the console. Note: you must use the debug version of Google Analytics for this setting to have any effect.',
-    'disable_sending' => 'Disable Sending Trafic to Goggle',
+    'disable_sending' => 'Disable Sending Traffic to Goggle',
     'disable_sending_instruct' => 'This allows you to visit a website running analytics.js code and inspect the implementation without interfering with the data being tracked. This is useful if you do not want to send data to Google Analytics in certain cases (e.g. development or testing environments).',
     'reporting_section' => 'Reporting Configuration',
     'view_id' => 'View ID',
