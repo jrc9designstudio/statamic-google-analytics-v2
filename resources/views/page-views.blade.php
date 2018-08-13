@@ -9,7 +9,7 @@
 
   <div class="dashboard">
     <div class="flexy mb-24">
-      <h1 class="fill">Google Analytics</h1>
+      <h1 class="fill">Visitors & Page Views | Google Analytics</h1>
 
       <google-analytics-date-picker scope="page"></google-analytics-date-picker>
     </div>

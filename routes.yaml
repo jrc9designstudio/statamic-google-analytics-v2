@@ -7,9 +7,9 @@ routes:
   /browsers:
     uses: browsers
     as: google-analytics.browsers
-  /referals:
-    uses: referals
-    as: google-analytics.referals
+  /referrals:
+    uses: referrals
+    as: google-analytics.referrals
   /page-views:
     uses: pageViews
     as: google-analytics.page-views

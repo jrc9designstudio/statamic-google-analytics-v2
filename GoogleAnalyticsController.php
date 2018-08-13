@@ -45,25 +45,34 @@ class GoogleAnalyticsController extends Controller {
   public function index() {
     $this->accessCheck();
 
-    return $this->view('index')->with('setup', $this->setup);
+    return $this->view('index',
+    [
+      'title' => 'Overview | Google Analytics'
+    ])->with('setup', $this->setup);
   }
 
   public function pageViews() {
     $this->accessCheck();
 
-    return $this->view('page-views')->with('setup', $this->setup);
+    return $this->view('page-views', [
+      'title' => 'Visitors & Page Views | Google Analytics'
+    ])->with('setup', $this->setup);
   }
 
   public function browsers() {
     $this->accessCheck();
 
-    return $this->view('browsers')->with('setup', $this->setup);
+    return $this->view('browsers', [
+      'title' => 'Browsers | Google Analytics'
+    ])->with('setup', $this->setup);
   }
 
-  public function referals() {
+  public function referrals() {
     $this->accessCheck();
 
-    return $this->view('referals')->with('setup', $this->setup);
+    return $this->view('referrals', [
+      'title' => 'Referrals | Google Analytics'
+    ])->with('setup', $this->setup);
   }
 
   // public function demographics() {
@@ -79,7 +88,9 @@ class GoogleAnalyticsController extends Controller {
   public function location() {
     $this->accessCheck();
 
-    return $this->view('location')->with('setup', $this->setup);
+    return $this->view('location', [
+      'title' => 'Location | Google Analytics'
+    ])->with('setup', $this->setup);
   }
 
   public function totalVisitorsAndPageViews() {
@@ -101,11 +112,11 @@ class GoogleAnalyticsController extends Controller {
         );
 
         $visitors = collect($totalVisitorsAndPageViews['rows'] ?? [])->map(function (array $dateRow) {
-            return (int) $dateRow[1];
+            return (int) $dateRow[2];
         });
 
         $pageViews = collect($totalVisitorsAndPageViews['rows'] ?? [])->map(function (array $dateRow) {
-            return (int) $dateRow[2];
+            return (int) $dateRow[1];
         });
 
         // if (reset($totalVisitorsAndPageViews['rows'])[0]->formatLocalized('%Y') == end($totalVisitorsAndPageViews['rows'])[0]->formatLocalized('%Y')) {

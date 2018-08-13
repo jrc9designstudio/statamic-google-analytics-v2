@@ -99,7 +99,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 -
   type: GoogleAnalytics.Browsers
   width: half | full
-  type: doughnut | bar | horizontal-bar
+  chart: doughnut | bar | horizontal-bar
   dates: show | hide
 ```
 
@@ -108,7 +108,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 -
   type: GoogleAnalytics.Referals
   width: half | full
-  type: doughnut | bar | horizontal-bar
+  chart: doughnut | bar | horizontal-bar
   dates: show | hide
 ```
 

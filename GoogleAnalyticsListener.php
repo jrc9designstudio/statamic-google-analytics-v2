@@ -32,7 +32,7 @@ class GoogleAnalyticsListener extends Listener {
         /* $item->add(Nav::item('Demographics')->route('google-analytics.demographics')); */
         $item->add(Nav::item('Location')->route('google-analytics.location'));
         $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
-        $item->add(Nav::item('Referals')->route('google-analytics.referals'));
+        $item->add(Nav::item('Referrals')->route('google-analytics.referrals'));
 
 
         $user = User::getCurrent();
@@ -53,8 +53,8 @@ class GoogleAnalyticsListener extends Listener {
    * @return string css & js link
    */
   public function addAssets() {
-    $html = $this->js->tag('chart.min.js?v=2.7.2');
-    $html .= $this->css->tag('styles.css?v=2.2.2');
+    $html = $this->js->tag('chart.js');
+    $html .= $this->css->tag('styles.css');
     return $html;
   }
 }
