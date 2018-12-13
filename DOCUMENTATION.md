@@ -3,7 +3,7 @@
 
 ## Installation
 1. Rename the folder `GoogleAnalytics` and copy it to your `site/addons` folder
-2. Run `php please update:addons` to install the depencency.
+2. Run `php please update:addons` to install the dependency.
 
 ## Tracking Configuration
 Use the settings to configure your tracking id and other Google Analytics settings or create a settings file in `site/settings/addons/google_analytics.yaml`
@@ -29,7 +29,7 @@ Add the Google Analytics tag to your theme layout file just before your close `<
 ```
 
 ## Environment Support
-Use Statamic's built in [environment specific settings](https://docs.statamic.com/settings#environment) to specify different settings for Google Analytics in development or testing.
+Use Statamic's built-in [environment specific settings](https://docs.statamic.com/settings#environment) to specify different settings for Google Analytics in development or testing.
 
 ## Reporting Setup
 To use the reporting features of the Google Analytics Addon you will have to create an account with Google, sign in and set it up with credentials to use Google's APIs.
@@ -37,9 +37,9 @@ To use the reporting features of the Google Analytics Addon you will have to cre
 ### Create A Project & Credentials
 1. Go to [Google API’s site](https://console.developers.google.com/apis) and select `Select a project`, and make a new project, or make sure the correct project is selected from the header.
 
-2. Enable the Google Analytics API by navagiating to `Libary` in the left hand side navagation. Search for `Google Analytics API`, slect this Libary to view the description and enable it. (Don't confuses this with the `Google Analytics Reporting API`)
+2. Enable the Google Analytics API by navigating to `Libary` in the left-hand side navigation. Search for `Google Analytics API`, select this Libary to view the description and enable it. (Don't confuses this with the `Google Analytics Reporting API`)
 
-3. Create Credentials by clicking on the `Create Credentials` button in the notification (on the top right) or by going to the `Credentials` item in the left hand side navagation.
+3. Create Credentials by clicking on the `Create Credentials` button in the notification (on the top right) or by going to the `Credentials` item in the left-hand side navigation.
 
 4. Select `Google Analytics API` from the dropdown for what API are you using?
 
@@ -49,7 +49,7 @@ To use the reporting features of the Google Analytics Addon you will have to cre
 
 7. Select `No, I'm not using them` for Are you using Google App Engine or Google Compute Engine? (unless you are)
 
-8. Click the button `What credentials do I neeed?`
+8. Click the button `What credentials do I need?`
 
 9. Enter a service account name (`statamic` for example)
 
@@ -60,23 +60,23 @@ To use the reporting features of the Google Analytics Addon you will have to cre
 12. Click `continue`, save the key file to a safe location, we will be using it later (and keep it private).
 
 ### Granting Permission to your Google Analytics Property
-1. Go to the [Google Analytics Website](https://analytics.google.com/analytics) and navagate to the settings for the appropiate property.
+1. Go to the [Google Analytics Website](https://analytics.google.com/analytics) and navigate to the settings for the appropriate property.
 
 2. Select `User Managment` under the view column.
 
-3. Add a new user with `Read & Analize` access using the `client_email` value from the JSON file you downloaded.
+3. Add a new user with `Read & Analyze` access using the `client_email` value from the JSON file you downloaded.
 
 4. Get the `View ID` by clicking on `View Settings` on the Google Analytics website.
 
 ### Setting it all up
 1. Add the `View ID` to the Google Analytics Settings under the `Reporting Configuration` section in the Statamic Control panel.
 
-2. Upload the JSON file & rename it to `site/settings/addons/google-analytics-credentials.json` or some other location outside of your version control system. Just make sure to set the path in the configuration (including the file name) if you put the file in a diffrent location.
+2. Upload the JSON file & rename it to `site/settings/addons/google-analytics-credentials.json` or some other location outside of your version control system. Just make sure to set the path in the configuration (including the file name) if you put the file in a different location.
 
 ## Widgets
-There are a number of widgets you can add to the Statamic Dashboard to quickly view reports, in addtion to the Google Analytics report pages in the navagation.
+There are a number of widgets you can add to the Statamic Dashboard to quickly view reports, in addition to the Google Analytics report pages in the navigation.
 
-Tye pipe `|` below indicates options, only one of the options should be used.
+The pipe `|` below indicates options, only one of the options should be used.
 
 ### Visitiors & Page Views
 ```
@@ -103,7 +103,7 @@ Tye pipe `|` below indicates options, only one of the options should be used.
   dates: show | hide
 ```
 
-### Referals
+### Referrals
 ```
 -
   type: GoogleAnalytics.Referals
@@ -116,15 +116,16 @@ Tye pipe `|` below indicates options, only one of the options should be used.
 To see page view stats on pages and entities add the Google Analytics field to your fieldset.
 
 ## Page Hits (Tag)
-If you want to show how many hits a page has you can use the page hits tag: `{{ google_analytics:hits }}`
+If you want to show how many hits a page has, you can use the page hits tag: `{{ google_analytics:hits }}`
 
-If you want to sort your collection entities by page hits you can do so using the sort param. `{{ collection:blog sort="{ google_analytics:hits }" }}`
+## Page Hits Sorting (Filter)
+If you want to sort your collection entities by page hits you can do so using the custom sort filter and setting the default sort to none. `{{ collection:blog filter="google_analytics" sort="none" }}`
 
 
 ## Access Restrictions
-By default anybody with *CP Access* will be able to see Google Analytics reports.
+By default, anybody with *CP Access* will be able to see Google Analytics reports.
 
-If you want to restrict what users can see the Google Analytics reports you can the slugs of the roles you wish to grant access to on the settins page under `Roles with Access`.
+If you want to restrict what users can see the Google Analytics reports you can the slugs of the roles you wish to grant access to on the settings page under `Roles with Access`.
 
 Example:
 ```

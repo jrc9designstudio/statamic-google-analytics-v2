@@ -61,7 +61,8 @@ class GoogleAnalyticsTags extends Tags {
    * @return integer
    */
   public function hits() {
-    return Analytics::performQuery(
+    return (int)Analytics::performQuery(
+      // This is the date that Google Analytics was started
       Period::create(new Carbon('2005-01-01'), new Carbon()),
       'ga:pageviews',
       [
