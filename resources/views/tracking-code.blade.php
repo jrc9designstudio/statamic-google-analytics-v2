@@ -31,6 +31,10 @@
     ga('set', 'sendHitTask', null);
 @endif
 
+@if ($anonymize_ip)
+    ga('set', 'anonymizeIp', true);
+@endif
+
 @if ($display_features)
     {{-- Use Display Features if enabled --}}
     ga('require', 'displayfeatures');

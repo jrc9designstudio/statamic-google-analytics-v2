@@ -7,6 +7,7 @@ return [
     'async_instruct' => 'Use the Async tracking code for Google Analytics. This can result in a small performance boost for modern browsers. You should only enable this if most users are using IE 9+. More Info: https://developers.google.com/analytics/devguides/collection/analyticsjs/',
     'beacon' => 'Enable Beacon Transport',
     'beacon_instruct' => 'Enable beacon for transportation of data in modern browsers.',
+    'anonymize_ip' => 'Anonymize IP',
     'tracking_features_section' => 'Tracking Features',
     'display_features' => 'Enable Display Features',
     'display_features_instruct' => 'Enable Display Features',

@@ -1,6 +1,7 @@
 tracking_id: ''
 async: false
 beacon: false
+anonymize_ip: false
 display_features: false
 link_id: false
 track_uid: false

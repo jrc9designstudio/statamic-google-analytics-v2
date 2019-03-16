@@ -16,6 +16,9 @@ sections:
         width: 50
       tracking_features_section:
         type: section
+      anonymize_ip:
+        type: toggle
+        width: 50
       display_features:
         type: toggle
         width: 50

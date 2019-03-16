@@ -24,6 +24,7 @@ class GoogleAnalyticsTags extends Tags {
     $tracking_id = str_replace(' ', '', $this->getConfig('tracking_id', ''), $value);
 
     if (!empty($tracking_id)) {
+      $anonymize_ip = $this->getConfig('anonymize_ip', false);
       $display_features = $this->getConfig('display_features', false);
       $async = $this->getConfig('async', false);
       $link_id = $this->getConfig('link_id', false);
@@ -39,6 +40,7 @@ class GoogleAnalyticsTags extends Tags {
 
       return $this->view('tracking-code', compact(
         'tracking_id',
+        'anonymize_ip',
         'async',
         'display_features',
         'link_id',
