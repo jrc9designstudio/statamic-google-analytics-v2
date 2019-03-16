@@ -1,5 +1,5 @@
 ## Requirements
-*Requirement:* Statamic v2.9.x
+*Requirement:* Statamic v2.11.4
 
 ## Installation
 1. Rename the folder `GoogleAnalytics` and copy it to your `site/addons` folder
@@ -11,6 +11,7 @@ Use the settings to configure your tracking id and other Google Analytics settin
 tracking_id: UA-*******-*
 async: false
 beacon: false
+anonymize_ip: false
 display_features: false
 link_id: false
 track_uid: false
@@ -62,7 +63,7 @@ To use the reporting features of the Google Analytics Addon you will have to cre
 ### Granting Permission to your Google Analytics Property
 1. Go to the [Google Analytics Website](https://analytics.google.com/analytics) and navigate to the settings for the appropriate property.
 
-2. Select `User Managment` under the view column.
+2. Select `User Management` under the view column.
 
 3. Add a new user with `Read & Analyze` access using the `client_email` value from the JSON file you downloaded.
 
@@ -86,7 +87,7 @@ The pipe `|` below indicates options, only one of the options should be used.
   dates: show | hide
 ```
 
-### MostVisited
+### Most Visited
 ```
 -
   type: GoogleAnalytics.MostVisited
@@ -119,7 +120,7 @@ To see page view stats on pages and entities add the Google Analytics field to y
 If you want to show how many hits a page has, you can use the page hits tag: `{{ google_analytics:hits }}`
 
 ## Page Hits Sorting (Filter)
-If you want to sort your collection entities by page hits you can do so using the custom sort filter and setting the default sort to none. `{{ collection:blog filter="google_analytics" sort="none" }}`
+If you want to sort your collection entities by page hits you can do so using the custom sort filter and setting the default sort to none. `{{ collection:blog filter="google_analytics" sort="false" }}`
 
 
 ## Access Restrictions
