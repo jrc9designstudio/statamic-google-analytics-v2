@@ -44,7 +44,8 @@ gulp.task('js', () => {
     .pipe(gulp.dest('./resources/assets/js/'));
 });
 
-gulp.task('default', ['styl', 'eslint', 'js']);
+// gulp.task('default', ['styl', 'eslint', 'js']);
+gulp.task('default', gulp.parallel('styl', 'eslint', 'js'));
 
 gulp.task('watch', function(){
   gulp.watch('./resources/assets/src/styl/**/*.styl', ['styl']);
