@@ -42,7 +42,15 @@
 
 @if ($link_id)
     {{-- Use Enhanced link attribution if enabled --}}
-    ga('require', 'linkid');
+    @if ($enhanced_link_attribution_settings)
+        ga('require', 'linkid', {
+          'cookieName': '{{ $enhanced_link_attribution_settings["cookie_name"] }}',
+          'duration': {{ $enhanced_link_attribution_settings["duration"] }},
+          'levels': {{ $enhanced_link_attribution_settings["levels"] }}
+        });
+    @else
+        ga('require', 'linkid');
+    @endif
 @endif
 
 @if ($beacon)

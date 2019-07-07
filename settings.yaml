@@ -1,6 +1,5 @@
 sections:
   traking:
-    display: Tracking
     fields:
       tracking_id:
         type: text
@@ -25,6 +24,29 @@ sections:
       link_id:
         type: toggle
         width: 50
+      enhanced_link_attribution_settings:
+        mode: stacked
+        max_rows: 1
+        min_rows: 1
+        fields:
+          cookie_name:
+            type: text
+            display: Cookie Name
+            default: _gali
+          duration:
+            type: integer
+            width: 50
+            display: Duration
+            default: "30"
+          levels:
+            type: integer
+            width: 50
+            display: Levels
+            default: "3"
+        type: grid
+        width: 50
+        show_when:
+          link_id: true
       user_tracking_options_section:
         type: section
       track_uid:
@@ -33,8 +55,7 @@ sections:
       ignore_admins:
         type: toggle
         width: 50
-  debug:
-    display: Debuging
+  debuging:
     fields:
       debug:
         type: toggle
@@ -46,7 +67,6 @@ sections:
         type: toggle
         width: 33
   reporting:
-    display: Reporting
     fields:
       view_id:
         type: text

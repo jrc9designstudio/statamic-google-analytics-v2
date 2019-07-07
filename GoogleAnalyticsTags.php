@@ -38,6 +38,16 @@ class GoogleAnalyticsTags extends Tags {
       $trace_debugging = $this->getConfig('trace_debugging', false);
       $disable_sending = $this->getConfig('disable_sending', false);
 
+      $enhanced_link_attribution_settings = $this->getConfig('enhanced_link_attribution_settings', false);
+
+      if ($enhanced_link_attribution_settings) {
+        $enhanced_link_attribution_settings = array_merge([
+          'cookie_name' => '_ela',
+          'duration' => 30,
+          'levels' => 3
+        ], $enhanced_link_attribution_settings[0]);
+      }
+
       return $this->view('tracking-code', compact(
         'tracking_id',
         'anonymize_ip',
@@ -50,7 +60,8 @@ class GoogleAnalyticsTags extends Tags {
         'user',
         'debug',
         'trace_debugging',
-        'disable_sending')
+        'disable_sending',
+        'enhanced_link_attribution_settings')
       )->render();
     }
 
