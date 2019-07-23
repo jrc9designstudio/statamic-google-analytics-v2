@@ -13,11 +13,12 @@ class BrowsersWidget extends Widget {
 
   public function html() {
     if ($this->googleanalytics->accessCheck()) {
-      $chart = $this->getParam('chart', 'doughnut');
-      $labels = $this->getParam('labels', 'right');
-      $dates = $this->getParam('dates', 'show');
-
-      return $this->view('widget-browsers', compact('chart', 'labels', 'dates'));
+      return $this->view('widget-browsers', [
+        'chart' => $this->getParam('chart', 'doughnut'),
+        'labels' => $this->getParam('labels', 'right'),
+        'dates' => $this->getParam('dates', 'show'),
+        'top_browsers' => $this->trans('cp.titles.top_browsers'),
+      ]);
     }
   }
 }

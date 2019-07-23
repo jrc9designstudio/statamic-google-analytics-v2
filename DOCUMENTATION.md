@@ -107,7 +107,7 @@ The pipe `|` below indicates options, only one of the options should be used.
 ### Referrals
 ```
 -
-  type: GoogleAnalytics.Referals
+  type: GoogleAnalytics.Referrals
   width: half | full
   chart: doughnut | bar | horizontal-bar
   dates: show | hide

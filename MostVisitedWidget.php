@@ -13,9 +13,10 @@ class MostVisitedWidget extends Widget {
 
   public function html() {
     if ($this->googleanalytics->accessCheck()) {
-      $dates = $this->getParam('dates', 'show');
-
-      return $this->view('widget-most-visited', compact('dates'));
+      return $this->view('widget-most-visited', [
+        'dates' => $this->getParam('dates', 'show'),
+        'most_visited_pages' => $this->trans('cp.titles.most_visited_pages'),
+      ]);
     }
   }
 }

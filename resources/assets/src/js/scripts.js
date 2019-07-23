@@ -53,6 +53,9 @@ const ga = {
     dateQuery() {
       return '?startDate=' + this.startDate + '&endDate=' + this.endDate;
     },
+    legends() {
+      return Statamic.translations['addons.GoogleAnalytics::cp'].legends;
+    },
   },
   watch: {
     'startDate'(val, oldVal) {
@@ -168,7 +171,10 @@ Vue.component('google-analytics-date-picker', {
 });
 
 Vue.component('google-analytics-line-chart', {
-  mixins: [ga, gaChart],
+  mixins: [
+    ga,
+    gaChart,
+  ],
   template: `<div :class="baseElClass">
               <div class="head">
                 <h1 class="fill">{{ title }}</h1>
@@ -196,7 +202,7 @@ Vue.component('google-analytics-line-chart', {
         data: {
           datasets: [
             {
-              label: 'Page Views',
+              label: this.legends.page_views,
               data: [],
               backgroundColor: 'rgba(53, 168, 227, 0.2)',
               borderColor: 'rgba(53, 168, 227, 0.2)',
@@ -204,7 +210,7 @@ Vue.component('google-analytics-line-chart', {
               pointRadius: 0,
             },
             {
-              label: 'Visitors',
+              label: this.legends.visitors,
               data: [],
               backgroundColor: 'rgba(255, 38, 158, 0.2)',
               borderColor: 'rgba(255, 38, 158, 0.2)',
@@ -258,7 +264,10 @@ Vue.component('google-analytics-line-chart', {
 });
 
 Vue.component('google-analytics-doughnut-chart', {
-  mixins: [ga, gaChart],
+  mixins: [
+    ga,
+    gaChart,
+  ],
   template: `<div class="card flush">
               <div class="head">
                 <h1 class="fill">{{ title }}</h1>
@@ -283,14 +292,16 @@ Vue.component('google-analytics-doughnut-chart', {
         type: 'doughnut',
         labels: [],
         data: {
-          datasets: [{
-            data: [],
-            backgroundColor: [
-              'rgb(36, 191, 90)',
-              '#ff9400',
-              'rgb(90, 200, 250)',
-            ],
-          }],
+          datasets: [
+            {
+              data: [],
+              backgroundColor: [
+                'rgb(36, 191, 90)',
+                '#ff9400',
+                'rgb(90, 200, 250)',
+              ],
+            },
+          ],
           labels: [],
         },
         options: {
@@ -312,7 +323,10 @@ Vue.component('google-analytics-doughnut-chart', {
 });
 
 Vue.component('google-analytics-bar-chart', {
-  mixins: [ga, gaChart],
+  mixins: [
+    ga,
+    gaChart,
+  ],
   template: `<div class="card flush">
               <div class="head">
                 <h1 class="fill">{{ title }}</h1>
@@ -337,14 +351,16 @@ Vue.component('google-analytics-bar-chart', {
         type: 'bar',
         labels: [],
         data: {
-          datasets: [{
-            data: [],
-            backgroundColor: [
-              'rgb(36, 191, 90)',
-              '#ff9400',
-              'rgb(90, 200, 250)',
-            ],
-          }],
+          datasets: [
+            {
+              data: [],
+              backgroundColor: [
+                'rgb(36, 191, 90)',
+                '#ff9400',
+                'rgb(90, 200, 250)',
+              ],
+            },
+          ],
           labels: [],
         },
         options: {
@@ -382,7 +398,10 @@ Vue.component('google-analytics-bar-chart', {
 });
 
 Vue.component('google-analytics-horizontal-bar-chart', {
-  mixins: [ga, gaChart],
+  mixins: [
+    ga,
+    gaChart,
+  ],
   template: `<div class="card flush">
               <div class="head">
                 <h1 class="fill">{{ title }}</h1>
@@ -407,14 +426,16 @@ Vue.component('google-analytics-horizontal-bar-chart', {
         type: 'horizontalBar',
         labels: [],
         data: {
-          datasets: [{
-            data: [],
-            backgroundColor: [
-              'rgb(36, 191, 90)',
-              '#ff9400',
-              'rgb(90, 200, 250)',
-            ],
-          }],
+          datasets: [
+            {
+              data: [],
+              backgroundColor: [
+                'rgb(36, 191, 90)',
+                '#ff9400',
+                'rgb(90, 200, 250)',
+              ],
+            },
+          ],
           labels: [],
         },
         options: {
@@ -452,7 +473,10 @@ Vue.component('google-analytics-horizontal-bar-chart', {
 });
 
 Vue.component('google-analytics-table', {
-  mixins: [ga, gaTable],
+  mixins: [
+    ga,
+    gaTable,
+  ],
   template: `<div class="card flush">
               <div class="head">
                 <h1 class="fill">{{ title }}</h1>

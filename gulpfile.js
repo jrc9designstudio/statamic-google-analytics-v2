@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const stylus = require('gulp-stylus');
 const uglify = require('gulp-uglify');
+// const { series } = require('gulp');
 
 gulp.task('styl', function () {
   return gulp.src('./resources/assets/src/styl/styles.styl')
@@ -47,7 +48,11 @@ gulp.task('js', () => {
 // gulp.task('default', ['styl', 'eslint', 'js']);
 gulp.task('default', gulp.parallel('styl', 'eslint', 'js'));
 
-gulp.task('watch', function(){
-  gulp.watch('./resources/assets/src/styl/**/*.styl', ['styl']);
-  gulp.watch('./resources/assets/src/js/**/*.js', ['eslint', 'js']);
-});
+gulp.task('watch', gulp.series('styl', 'eslint', 'js', (done) => {
+
+  gulp.watch('./resources/assets/src/styl/**/*.styl', gulp.series('styl'));
+  gulp.watch('./resources/assets/src/js/**/*.js', gulp.series('eslint', 'js'));
+
+  done();
+
+}));

@@ -1,7 +1,11 @@
 /* global Vue, GoogleAnalyticsMap, Flags, Statamic, document, ga */
 
 Vue.component('google-analytics-map', {
-  mixins: [GoogleAnalyticsMap, Flags, ga],
+  mixins: [
+    GoogleAnalyticsMap,
+    Flags,
+    ga,
+  ],
   data: () => ({
     x: -10000,
     y: -10000,

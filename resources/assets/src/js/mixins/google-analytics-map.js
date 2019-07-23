@@ -1,7 +1,16 @@
+/* global Statamic */
 /* eslint max-len: 0 */
 // Disable max length rule because svg code has long lines
 
-const GoogleAnalyticsMap = {
+const GoogleAnalyticsMap = { // eslint-disable-line no-unused-vars
+  computed: {
+    legends() {
+      return Statamic.translations['addons.GoogleAnalytics::cp'].legends;
+    },
+    notEnoughData() {
+      return Statamic.translations['addons.GoogleAnalytics::cp'].errors.not_enough_data;
+    },
+  },
   template: `<div class="card flush google-analytics-map-card">
     <div class="head">
       <h1 class="fill">{{ title }}</h1>
@@ -11,42 +20,24 @@ const GoogleAnalyticsMap = {
     <div class="body google-analytics-map-body" @mousemove="mouseTrack" @mouseout="hideInfo">
       <div :class="infoClass" :style="infoStyle">
         <h2>
-         {{ country }}
-
-         <div class="pull-right">{{ flag.emoji }}</div>
+          {{ country }}
+          <div class="pull-right">{{ flag.emoji }}</div>
         </h2>
-
         <p>
-
-            <strong>Page Views:</strong>
-            <span v-if="stats.pageViews">
-             {{ stats.pageViews.toLocaleString() }}
-            </span>
-            <span v-else>
-             0
-            </span>
+          <strong>{{ legends.page_views }}:</strong> {{ stats.pageViews ? stats.pageViews.toLocaleString() : 0 }}<br />
+          <strong>{{ legends.sessions }}:</strong> {{ stats.sessions ? stats.sessions.toLocaleString() : 0 }}<br />
+          <span v-if="stats.pageLoadTime">
+            <strong>{{ legends.domain_lookup_time }}:</strong> {{ stats.domainLookupTime.toLocaleString() }}ms<br />
+            <strong>{{ legends.server_response_time }}:</strong> {{ stats.serverResponseTime.toLocaleString() }}ms<br />
+            <strong>{{ legends.server_connection_time }}:</strong> {{ stats.serverConnectionTime.toLocaleString() }}ms<br />
+            <strong>{{ legends.page_download_time }}:</strong> {{ stats.pageDownloadTime.toLocaleString() }}ms<br />
+            <strong>{{ legends.dom_interactive_time }}:</strong> {{ stats.domInteractiveTime.toLocaleString() }}ms<br />
+            <strong>{{ legends.page_load_time }}:</strong> {{ stats.pageLoadTime.toLocaleString() }}ms
+          </span>
+          <em v-else>
             <br />
-
-            <strong>Sessions:</strong>
-            <span v-if="stats.sessions">
-             {{ stats.sessions.toLocaleString() }}
-            </span>
-            <span v-else>
-             0
-            </span>
-            <br />
-
-            <span v-if="stats.pageLoadTime">
-             <strong>Domain Lookup Time:</strong> {{ stats.domainLookupTime.toLocaleString() }}ms<br />
-             <strong>Server Response Time:</strong> {{ stats.serverResponseTime.toLocaleString() }}ms<br />
-             <strong>Serve Connect Time:</strong> {{ stats.serverConnectionTime.toLocaleString() }}ms<br />
-             <strong>Page Download Time:</strong> {{ stats.pageDownloadTime.toLocaleString() }}ms<br />
-             <strong>DOM Interactive Time:</strong> {{ stats.domInteractiveTime.toLocaleString() }}ms<br />
-             <strong>Page Load Time:</strong> {{ stats.pageLoadTime.toLocaleString() }}ms
-            </span>
-            <em v-else>
-             <br />Not enough data to show site&nbsp;performance.
-            </em>
+            <span v-html='notEnoughData'>
+          </em>
         </p>
       </div>
 

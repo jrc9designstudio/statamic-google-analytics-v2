@@ -47,7 +47,11 @@ class GoogleAnalyticsController extends Controller {
 
     return $this->view('index',
     [
-      'title' => 'Overview | Google Analytics'
+      'title' => $this->makeTitle('overview'),
+      'page_views' => $this->trans('cp.titles.page_views'),
+      'top_referrers' => $this->trans('cp.titles.top_referrers'),
+      'top_browsers' => $this->trans('cp.titles.top_browsers'),
+      'not_setup' => $this->trans('cp.errors.not_setup'),
     ])->with('setup', $this->setup);
   }
 
@@ -55,7 +59,10 @@ class GoogleAnalyticsController extends Controller {
     $this->accessCheck();
 
     return $this->view('page-views', [
-      'title' => 'Visitors & Page Views | Google Analytics'
+      'title' => $this->makeTitle('page_views'),
+      'page_views' => $this->trans('cp.titles.page_views'),
+      'most_visited_pages' => $this->trans('cp.titles.most_visited_pages'),
+      'not_setup' => $this->trans('cp.errors.not_setup'),
     ])->with('setup', $this->setup);
   }
 
@@ -63,7 +70,9 @@ class GoogleAnalyticsController extends Controller {
     $this->accessCheck();
 
     return $this->view('browsers', [
-      'title' => 'Browsers | Google Analytics'
+      'title' => $this->makeTitle('browsers'),
+      'top_browsers' => $this->trans('cp.titles.top_browsers'),
+      'not_setup' => $this->trans('cp.errors.not_setup'),
     ])->with('setup', $this->setup);
   }
 
@@ -71,7 +80,9 @@ class GoogleAnalyticsController extends Controller {
     $this->accessCheck();
 
     return $this->view('referrals', [
-      'title' => 'Referrals | Google Analytics'
+      'title' => $this->makeTitle('referrals'),
+      'top_referrers' => $this->trans('cp.titles.top_referrers'),
+      'not_setup' => $this->trans('cp.errors.not_setup'),
     ])->with('setup', $this->setup);
   }
 
@@ -89,7 +100,10 @@ class GoogleAnalyticsController extends Controller {
     $this->accessCheck();
 
     return $this->view('location', [
-      'title' => 'Location | Google Analytics'
+      'title' => $this->makeTitle('location'),
+      'google_analytics_map' => $this->trans('cp.titles.google_analytics_map'),
+      'stats_by_location' => $this->trans('cp.titles.stats_by_location'),
+      'not_setup' => $this->trans('cp.errors.not_setup'),
     ])->with('setup', $this->setup);
   }
 
@@ -191,7 +205,7 @@ class GoogleAnalyticsController extends Controller {
       $topBrowsers = Analytics::fetchTopBrowsers($period)->toArray();
 
       $labels = array_map(function($label) {
-        return $this->camelToTitle($label);
+        return $this->trans('cp.legends.' . $this->camelCaseToUnderscore($label));
       }, array_keys($topBrowsers[0]));
 
       return [
@@ -235,7 +249,7 @@ class GoogleAnalyticsController extends Controller {
       $topReferrers = Analytics::fetchTopReferrers($period)->toArray();
 
       $labels = array_map(function($label) {
-        return $this->camelToTitle($label);
+        return $this->trans('cp.legends.' . $this->camelCaseToUnderscore($label));
       }, array_keys($topReferrers[0]));
 
       return [
@@ -256,7 +270,7 @@ class GoogleAnalyticsController extends Controller {
       $mostVisitedPages = Analytics::fetchMostVisitedPages($period)->toArray();
 
       $labels = array_map(function($label) {
-        return $this->camelToTitle($label);
+        return $this->trans('cp.legends.' . $this->camelCaseToUnderscore($label));
       }, array_keys($mostVisitedPages[0]));
 
       return [
@@ -278,8 +292,9 @@ class GoogleAnalyticsController extends Controller {
       $keyedData = [];
 
       $labels = array_map(function($label) {
-        $labelValue = $this->camelToTitle(preg_replace('/^ga:/', '', $label['name']));
-        return preg_match('/time/i', $labelValue) ? ($labelValue . ' (ms)') : $labelValue;
+        $key = $this->camelCaseToUnderscore(preg_replace('/^ga:/', '', $label['name']));
+        $labelValue = $this->trans('cp.legends.' . $key);
+        return preg_match('/time/i', $labelValue) ? ($labelValue . ' (' .  $this->trans('cp.legends.ms') . ')') : $labelValue;
       }, $data['modelData']['columnHeaders']);
 
       foreach ($data->rows as $value) {
@@ -301,6 +316,10 @@ class GoogleAnalyticsController extends Controller {
     } catch (\Exception $e) {
         return $e;
     }
+  }
+
+  private function makeTitle($key) {
+    return $this->trans('cp.titles.' . $key) . $this->trans('cp.titles.joiner') . $this->trans('cp.titles.base');
   }
 
   private function getPeriod() {
@@ -344,6 +363,10 @@ class GoogleAnalyticsController extends Controller {
                           $intermediate);
 
     return ucwords($titleStr);
+  }
+
+  private function camelCaseToUnderscore($input) {
+    return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $input));
   }
 
   private function getColours($labels) {
@@ -398,7 +421,7 @@ class GoogleAnalyticsController extends Controller {
 
   private function accessCheck() {
     if (!$this->googleanalytics->accessCheck()) {
-      abort(403, 'Access denied');
+      abort(403, $this->trans('cp.errors.access_denied'));
     }
   }
 }

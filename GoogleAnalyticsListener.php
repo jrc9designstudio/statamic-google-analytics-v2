@@ -24,21 +24,21 @@ class GoogleAnalyticsListener extends Listener {
   public function addNavItems($nav) {
     if ($this->googleanalytics->accessCheck()) {
       // Create the first level navigation item
-      $store = Nav::item('Google Analytics')->route('index')->icon('line-graph');
+      $store = Nav::item($this->trans('cp.nav.google_analytics'))->route('index')->icon('line-graph');
 
       // Add second level navigation items to it
       $store->add(function ($item) {
-        $item->add(Nav::item('Browsers')->route('google-analytics.browsers'));
+        $item->add(Nav::item($this->trans('cp.nav.browsers'))->route('google-analytics.browsers'));
         /* $item->add(Nav::item('Demographics')->route('google-analytics.demographics')); */
-        $item->add(Nav::item('Location')->route('google-analytics.location'));
-        $item->add(Nav::item('Page Views')->route('google-analytics.page-views'));
-        $item->add(Nav::item('Referrals')->route('google-analytics.referrals'));
+        $item->add(Nav::item($this->trans('cp.nav.location'))->route('google-analytics.location'));
+        $item->add(Nav::item($this->trans('cp.nav.page_views'))->route('google-analytics.page-views'));
+        $item->add(Nav::item($this->trans('cp.nav.referrals'))->route('google-analytics.referrals'));
 
 
         $user = User::getCurrent();
 
         if ($user && $user->isSuper()) {
-          $item->add(Nav::item('Settings')->route('addon.settings', 'google-analytics'));
+          $item->add(Nav::item($this->trans('cp.nav.settings'))->route('addon.settings', 'google-analytics'));
         }
       });
 

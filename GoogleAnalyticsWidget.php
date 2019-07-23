@@ -13,10 +13,11 @@ class GoogleAnalyticsWidget extends Widget {
 
   public function html() {
     if ($this->googleanalytics->accessCheck()) {
-      $dates = $this->getParam('dates', 'show');
-      $labels = $this->getParam('labels', 'bottom');
-
-      return $this->view('widget', compact('dates', 'labels'));
+      return $this->view('widget', [
+        'dates' => $this->getParam('dates', 'show'),
+        'labels' => $this->getParam('labels', 'bottom'),
+        'page_views' => $this->trans('cp.titles.page_views'),
+      ]);
     }
   }
 }

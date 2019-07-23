@@ -1,1 +1,1 @@
-<google-analytics-table title="Most Visited Pages" endpoint="most-visited-pages" date-picker="{{ $dates }}"></google-analytics-table>
+<google-analytics-table title="{{ $most_visited_pages }}" endpoint="most-visited-pages" date-picker="{{ $dates }}"></google-analytics-table>
