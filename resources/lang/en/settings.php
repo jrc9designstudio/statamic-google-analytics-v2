@@ -39,5 +39,8 @@ return [
     'service_account_credentials_json' => 'Service Account Credentials JSON File Location',
     'service_account_credentials_json_instruct' => 'Where we can find the service account credentials file, defaults to the addon settings folder inside the sites folder: `../../site/settings/addons/google-analytics-credentials.json`. See [the docs](https://statamic.com/marketplace/addons/google-analytics/docs) to see how to get this JSON file.',
     'roles_with_access' => 'Roles with Access',
-    'roles_with_access_instruct' => 'Slugs of the roles you wish to restrict Google Analytics Reports access to. Leave blank for anyone with *CP Access*.'
+    'roles_with_access_instruct' => 'Slugs of the roles you wish to restrict Google Analytics Reports access to. Leave blank for anyone with *CP Access*.',
+    'tags' => 'Tags',
+    'page_hits_cache_time' => 'Page Hits Cache Time',
+    'page_hits_cache_time_instruct' => 'Time to chache page hits for in minutes.',
 ];

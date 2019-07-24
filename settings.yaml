@@ -83,3 +83,7 @@ sections:
       roles_with_access:
         type: list
         width: 100
+  tags:
+    fields:
+      page_hits_cache_time:
+        type: integer
