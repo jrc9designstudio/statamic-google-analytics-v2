@@ -482,11 +482,11 @@ Vue.component('google-analytics-table', {
                 <h1 class="fill">{{ title }}</h1>
                 <google-analytics-date-picker v-if="showDatePicker"></google-analytics-date-picker>
               </div>
-              <div class="body">
+              <div class="body ga-table-scrollable">
                 <table class="ga-table">
                   <thead>
                     <tr>
-                      <td v-for="label in labels">{{ label }}</td>
+                      <td v-for="label in labels"><strong>{{ label }}</strong></td>
                     <tr>
                   </thead>
                   <tbody>
