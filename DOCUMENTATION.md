@@ -122,6 +122,12 @@ If you want to show how many hits a page has, you can use the page hits tag: `{{
 ## Page Hits Sorting (Filter)
 If you want to sort your collection entities by page hits you can do so using the custom sort filter and setting the default sort to none. `{{ collection:blog filter="google_analytics" sort="false" }}`
 
+## Page Hits Precache
+If you are sorting or filtering content by page hits you may want to pre cache your page hits numbers in the background. You can do this using the `php please googleanalytics:precache-hits` command.
+
+In order for this to be effective you should set up a cron job to run this command before your cache expires.
+
+You can set the cache time for page hits on the settings page for Google Analytics.
 
 ## Access Restrictions
 By default, anybody with *CP Access* will be able to see Google Analytics reports.

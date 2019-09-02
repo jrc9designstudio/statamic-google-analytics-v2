@@ -64,7 +64,7 @@ class GoogleAnalyticsTags extends Tags {
    * @return integer
    */
   public function hits() {
-    $key = $this->context['uri'];
+    $key = $this->context['url'];
 
     $data = $this->cache->get($key);
 
