@@ -82,4 +82,19 @@ class GoogleAnalyticsTags extends Tags {
 
     return $data;
   }
+
+  /**
+   * The {{ google_analytics:tracking_id }} tag
+   *
+   * @return string
+   */
+  public function tracking_id() {
+    $tracking_id = str_replace(' ', '', $this->getConfig('tracking_id', ''), $value);
+
+    if (!empty($tracking_id)) {
+      return $tracking_id;
+    }
+
+    return '<!-- Google Analytics Tracking code is not setup yet! -->';
+  }
 }
