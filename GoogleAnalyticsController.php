@@ -327,6 +327,7 @@ class GoogleAnalyticsController extends Controller {
 
     $startDate = $request->get('startDate', null);
     $endDate = $request->get('endDate', null);
+    $requestPeriod = $request->get('period', null);
 
     if ($startDate != null && $endDate != null) {
       $startDate = new Carbon($startDate);
@@ -336,6 +337,29 @@ class GoogleAnalyticsController extends Controller {
         $period = Period::create($startDate, $endDate);
       } catch (\Exception $e) {
         $period = Period::days(30);
+      }
+    } else if ($requestPeriod != null) {
+      switch($requestPeriod) {
+        case '1week':
+          $period = Period::days(7);
+          break;
+        case '2weeks':
+          $period = Period::days(14);
+          break;
+        case '1month':
+          $period = Period::days(30);
+          break;
+        case '3months':
+          $period = Period::days(90);
+          break;
+        case '6months':
+          $period = Period::days(180);
+          break;
+        case '1year':
+          $period = Period::days(365);
+          break;
+        default:
+          $period = Period::days(30);
       }
     } else {
       $period = Period::days(30);

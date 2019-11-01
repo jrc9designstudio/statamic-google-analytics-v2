@@ -41,6 +41,7 @@ const ga = {
   data: () => ({
     startDate: '',
     endDate: '',
+    period: '',
     loading: true,
   }),
   computed: {
@@ -51,10 +52,25 @@ const ga = {
       return this.url ? 'ga-chart-standalone' : 'card flush';
     },
     dateQuery() {
-      return '?startDate=' + this.startDate + '&endDate=' + this.endDate;
+      return '?startDate=' + this.startDate + '&endDate=' + this.endDate + '&period=' + this.period;
     },
     legends() {
-      return Statamic.translations['addons.GoogleAnalytics::cp'].legends;
+      return Statamic.translations['addons.GoogleAnalytics::cp'].legends || {
+        browser: 'Browser',
+        country: 'Country',
+        dom_interactive_time: 'DOM Interactive Time',
+        domain_lookup_time: 'Domain Lookup Time',
+        ms: 'ms',
+        page_download_time: 'Page Download Time',
+        page_load_time: 'Page Load Time',
+        page_title: 'Page Title',
+        page_views: 'Page Views',
+        server_connection_time: 'Server Connection Time',
+        server_response_time: 'Server Response Time',
+        sessions: 'Sessions',
+        url: 'URL',
+        visitors: 'Visitors',
+      };
     },
   },
   watch: {
@@ -68,16 +84,27 @@ const ga = {
         this.getData();
       }
     },
+    'period'(val, oldVal) {
+      if (val !== oldVal && this.period !== '') {
+        this.getData();
+      }
+    },
   },
   ready() {
-    const that = this;
-
     EventBus.$on('set-start-date', (startDate) => {
-      that.startDate = startDate;
+      this.startDate = startDate;
+      this.period = '';
     });
 
     EventBus.$on('set-end-date', (endDate) => {
-      that.endDate = endDate;
+      this.endDate = endDate;
+      this.period = '';
+    });
+
+    EventBus.$on('set-period', (period) => {
+      this.period = period;
+      this.startDate = '';
+      this.endDate = '';
     });
   },
 };
@@ -145,13 +172,24 @@ Vue.component('google-analytics-date-picker', {
   data: () => ({
     startDate: '',
     endDate: '',
+    period: '1month',
   }),
+  computed: {
+    isDateSupported() {
+      var input = document.createElement('input');
+      var value = 'a';
+      input.setAttribute('type', 'date');
+      input.setAttribute('value', value);
+      return (input.value !== value);
+    },
+  },
   watch: {
     'startDate'(val, oldVal) {
       if (val !== oldVal && this.scope === 'page') {
         EventBus.$emit('set-start-date', this.startDate);
       } else {
         this.$parent.$data.startDate = this.startDate;
+        this.$parent.$data.period = '';
       }
     },
     'endDate'(val, oldVal) {
@@ -159,14 +197,57 @@ Vue.component('google-analytics-date-picker', {
         EventBus.$emit('set-end-date', this.endDate);
       } else {
         this.$parent.$data.endDate = this.endDate;
+        this.$parent.$data.period = '';
+      }
+    },
+    'period'(val, oldVal) {
+      if (val !== oldVal && this.scope === 'page') {
+        EventBus.$emit('set-period', this.period);
+      } else {
+        this.$parent.$data.period = this.period;
+        this.$parent.$data.startDate = '';
+        this.$parent.$data.endDate = '';
       }
     },
   },
   template: `<div class="controls flexy">
-              <label class="sr-only">Start Date:&nbsp;&nbsp;</label>
-              <input type="date" v-model="startDate" />
-              &nbsp;-&nbsp;<label class="sr-only">&nbsp;&nbsp;End Date:&nbsp;&nbsp;</label>
-              <input type="date" v-model="endDate" />
+              <label v-if='period === "custom"' class="sr-only">Start Date:&nbsp;&nbsp;</label>
+              <input v-if='period === "custom"' type="date" v-model="startDate" />
+              <span v-if='period === "custom"'>&nbsp;-&nbsp;</span>
+              <label v-if='period === "custom"' class="sr-only">&nbsp;&nbsp;End Date:&nbsp;&nbsp;</label>
+              <input v-if='period === "custom"' type="date" v-model="endDate" />
+              <label class='period-label' v-if='period !== "custom"'>
+                <input type='radio' value='1week' name='period' v-model='period' />
+                <span class='text'>1w</span>
+              </label>
+              <label class='period-label' v-if='period !== "custom"'>
+                <input type='radio' value='2weeks' name='period' v-model='period' />
+                <span class='text'>2w</span>
+              </label>
+              <label class='period-label' v-if='period !== "custom"'>
+                <input type='radio' value='1month' name='period' v-model='period' />
+                <span class='text'>1m</span>
+              </label>
+              <label class='period-label' v-if='period !== "custom"'>
+                <input type='radio' value='3months' name='period' v-model='period' />
+                <span class='text'>3m</span>
+              </label>
+              <label class='period-label' v-if='period !== "custom"'>
+                <input type='radio' value='6months' name='period' v-model='period' />
+                <span class='text'>6m</span>
+              </label>
+              <label class='period-label' v-if='period !== "custom"'>
+                <input type='radio' value='1year' name='period' v-model='period' />
+                <span class='text'>1y</span>
+              </label>
+              <label class='period-label' v-if='isDateSupported && period !== "custom"'>
+                <input type='radio' value='custom' name='period' v-model='period' />
+                <span  class='icon icon-calendar'></span>
+              </label>
+              <label class='period-label' v-if='isDateSupported && period === "custom"'>
+                <input type='radio' value='1week' name='period' v-model='period' />
+                <span  class='icon icon-circle-with-cross'></span>
+              </label>
             </div>`,
 });
 
