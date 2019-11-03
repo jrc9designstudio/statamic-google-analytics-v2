@@ -25,9 +25,9 @@ disable_sending: false
 ## Tracking Tag
 Add the Google Analytics tag to your theme layout file just before your close `</head>` tag.
 
-```
-  {{ google_analytics }}
-```
+`{{ google_analytics }}`
+
+Optionally if you just want the Google Analytics Tracking ID to you can use the `{{ google_analytics:tracking_id }}` tag.
 
 ## Environment Support
 Use Statamic's built-in [environment specific settings](https://docs.statamic.com/settings#environment) to specify different settings for Google Analytics in development or testing.
@@ -117,13 +117,13 @@ The pipe `|` below indicates options, only one of the options should be used.
 To see page view stats on pages and entities add the Google Analytics field to your fieldset.
 
 ## Page Hits (Tag)
-If you want to show how many hits a page has, you can use the page hits tag: `{{ google_analytics:hits }}`
+If you want to show how many hits a page has, you can use the page hits tag: `{{ google_analytics:hits }}` optionally you can include `period='30'` where 30 is the number of days you want to use for the page hits.
 
 ## Page Hits Sorting (Filter)
-If you want to sort your collection entities by page hits you can do so using the custom sort filter and setting the default sort to none. `{{ collection:blog filter="google_analytics" sort="false" }}`
+If you want to sort your collection entities by page hits you can do so using the custom sort filter and setting the default sort to none. `{{ collection:blog filter="google_analytics" sort="false" }}` optionally you can include `period='30'` where 30 is the number of days you want to use for the page hits.
 
 ## Page Hits Precache
-If you are sorting or filtering content by page hits you may want to pre cache your page hits numbers in the background. You can do this using the `php please googleanalytics:precache-hits` command.
+If you are sorting or filtering content by page hits you may want to pre-cache your page hits numbers in the background. You can do this using the `php please googleanalytics:precache-hits` command. If you are using period when you are using the page hits tag you should add `--period=30` to the end of this command where 30 is the number of days you are using for your page hits sorting or filtering.
 
 In order for this to be effective you should set up a cron job to run this command before your cache expires.
 

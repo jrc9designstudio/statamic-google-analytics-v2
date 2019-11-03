@@ -17,7 +17,8 @@ class PrecacheHitsCommand extends Command {
    *
    * @var string
    */
-  protected $signature = 'googleanalytics:precache-hits';
+  protected $signature = 'googleanalytics:precache-hits
+                          {--period= : The period for the caches (optional)}';
 
   /**
    * The console command description.
@@ -39,6 +40,10 @@ class PrecacheHitsCommand extends Command {
    * @return mixed
    */
   public function handle() {
+    $requestPeriod = (int) $this->option('period');
+    // This is the date that Google Analytics was started
+    $period = $requestPeriod ? Period::days($requestPeriod) : Period::create(new Carbon('2005-01-01'), new Carbon());
+    
     // Hold urls to pre-cache
     $urls = [];
 
@@ -61,19 +66,22 @@ class PrecacheHitsCommand extends Command {
     }
 
     $index = 1;
-    $size = sizeof($urls);
+    $size = count($urls);
 
     foreach ($urls as $url) {
       $data = (int)Analytics::performQuery(
-        // This is the date that Google Analytics was started
-        Period::create(new Carbon('2005-01-01'), new Carbon()),
+        $period,
         'ga:pageviews',
         [
           'filters' => 'ga:pagePath==' . $url,
         ]
       )->totalsForAllResults['ga:pageviews'];
-      $this->cache->put($url, $data, $this->getConfig('page_hits_cache_time', 1440));
-      $this->info($index . "/" . $size . " -- Cached URL: " . $url . " Page Views: " . $data);
+      $key = $url;
+      if ($requestPeriod) {
+        $key .= '_p_' . $requestPeriod;
+      }
+      $this->cache->put($key, $data, $this->getConfig('page_hits_cache_time', 1440));
+      $this->info($index . "/" . $size . " -- Cached URL: " . $url . " Page Views: " . $data . ($requestPeriod ? " (" . $requestPeriod . " days)" : ''));
       $index++;
     }
   }

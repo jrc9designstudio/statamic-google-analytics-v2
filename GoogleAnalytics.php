@@ -18,7 +18,7 @@ class GoogleAnalytics {
 
     $user = User::getCurrent();
 
-    if (sizeof($role_handels) < 1 || ($user && $user->isSuper())) {
+    if (count($role_handels) < 1 || ($user && $user->isSuper())) {
       return true;
     }
 

@@ -22,7 +22,7 @@ class GoogleAnalyticsTags extends Tags {
    * @return string|array
    */
   public function index() {
-    $tracking_id = str_replace(' ', '', $this->getConfig('tracking_id', ''), $value);
+    $tracking_id = str_replace(' ', '', $this->getConfig('tracking_id', ''));
 
     if (!empty($tracking_id)) {
       $enhanced_link_attribution_settings = $this->getConfig('enhanced_link_attribution_settings', false);
@@ -64,14 +64,20 @@ class GoogleAnalyticsTags extends Tags {
    * @return integer
    */
   public function hits() {
+    $requestPeriod = $this->getInt('period', null);
     $key = $this->context['url'];
+    if ($requestPeriod) {
+      $key .= '_p_' . $requestPeriod;
+    }
 
     $data = $this->cache->get($key);
 
     if ($data == null) {
+      // This is the date that Google Analytics was started
+      $period = $requestPeriod ? Period::days($requestPeriod) : Period::create(new Carbon('2005-01-01'), new Carbon());
       $data = (int)Analytics::performQuery(
         // This is the date that Google Analytics was started
-        Period::create(new Carbon('2005-01-01'), new Carbon()),
+        $period,
         'ga:pageviews',
         [
           'filters' => 'ga:pagePath==' . $key,
@@ -89,7 +95,7 @@ class GoogleAnalyticsTags extends Tags {
    * @return string
    */
   public function tracking_id() {
-    $tracking_id = str_replace(' ', '', $this->getConfig('tracking_id', ''), $value);
+    $tracking_id = str_replace(' ', '', $this->getConfig('tracking_id', ''));
 
     if (!empty($tracking_id)) {
       return $tracking_id;

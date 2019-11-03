@@ -302,8 +302,8 @@ class GoogleAnalyticsController extends Controller {
 
         $arry['country'] = $value[0];
 
-        for ($i = 1; $i < sizeof($data['modelData']['columnHeaders']); $i++) {
-          $arry[preg_replace('/^ga:/', '', $data['modelData']['columnHeaders'][$i]['name'])] = intval($value[$i]);
+        for ($i = 1; $i < count($data['modelData']['columnHeaders']); $i++) {
+          $arry[preg_replace('/^ga:/', '', $data['modelData']['columnHeaders'][$i]['name'])] = (int) $value[$i];
         }
 
         $keyedData[$value[0]] = $arry;
@@ -376,17 +376,6 @@ class GoogleAnalyticsController extends Controller {
     }
 
     return false;
-  }
-
-  private function camelToTitle($camelStr) {
-    $intermediate = preg_replace('/(?!^)([[:upper:]][[:lower:]]+)/',
-                          ' $0',
-                          $camelStr);
-    $titleStr = preg_replace('/(?!^)([[:lower:]])([[:upper:]])/',
-                          '$1 $2',
-                          $intermediate);
-
-    return ucwords($titleStr);
   }
 
   private function camelCaseToUnderscore($input) {
