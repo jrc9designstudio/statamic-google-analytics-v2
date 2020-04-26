@@ -42,5 +42,5 @@ return [
     'roles_with_access_instruct' => 'Slugs of the roles you wish to restrict Google Analytics Reports access to. Leave blank for anyone with *CP Access*.',
     'tags' => 'Tags',
     'page_hits_cache_time' => 'Page Hits Cache Time',
-    'page_hits_cache_time_instruct' => 'Time to chache page hits for in minutes.',
+    'page_hits_cache_time_instruct' => 'Time to cache page hits for in minutes.',
 ];
