@@ -6,7 +6,7 @@ const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const stylus = require('gulp-stylus');
-const uglify = require('gulp-uglify');
+const uglify = require('gulp-uglify-es').default;
 // const { series } = require('gulp');
 
 gulp.task('styl', function () {
