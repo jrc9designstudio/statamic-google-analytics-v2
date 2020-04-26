@@ -2,6 +2,7 @@
 
 namespace Statamic\Addons\GoogleAnalytics;
 
+use Log;
 use Carbon;
 use Analytics;
 use JRC9DS\Analytics\Period;
@@ -73,17 +74,23 @@ class GoogleAnalyticsTags extends Tags {
     $data = $this->cache->get($key);
 
     if ($data == null) {
-      // This is the date that Google Analytics was started
-      $period = $requestPeriod ? Period::days($requestPeriod) : Period::create(new Carbon('2005-01-01'), new Carbon());
-      $data = (int)Analytics::performQuery(
+      try {
         // This is the date that Google Analytics was started
-        $period,
-        'ga:pageviews',
-        [
-          'filters' => 'ga:pagePath==' . $key,
-        ]
-      )->totalsForAllResults['ga:pageviews'];
-      $this->cache->put($key, $data, $this->getConfig('page_hits_cache_time', 1440));
+        $period = $requestPeriod ? Period::days($requestPeriod) : Period::create(new Carbon('2005-01-01'), new Carbon());
+        $data = (int)Analytics::performQuery(
+          // This is the date that Google Analytics was started
+          $period,
+          'ga:pageviews',
+          [
+            'filters' => 'ga:pagePath==' . $key,
+          ]
+        )->totalsForAllResults['ga:pageviews'];
+        $this->cache->put($key, $data, $this->getConfig('page_hits_cache_time', 1440));
+      } catch (\Exception $e) {
+        $hits = '…';
+        Log::error($e);
+        return false;
+      }
     }
 
     return $data;

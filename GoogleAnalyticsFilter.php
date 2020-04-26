@@ -2,6 +2,7 @@
 
 namespace Statamic\Addons\GoogleAnalytics;
 
+use Log;
 use Carbon;
 use Analytics;
 use Statamic\Extend\Filter;
@@ -17,25 +18,31 @@ class GoogleAnalyticsFilter extends Filter {
     $requestPeriod = $this->getInt('period', null);
     // This is the date that Google Analytics was started
     $period = $requestPeriod ? Period::days($requestPeriod) : Period::create(new Carbon('2005-01-01'), new Carbon());
-      
+
     return $collection->sortByDesc(function($entry) use ($requestPeriod, $period) {
       $key = $entry->url();
       if ($requestPeriod) {
         $key .= '_p_' . $requestPeriod;
       }
       $hits = (int) $this->cache->get($key);
-      
+
       if ($hits == null) {
-        $hits = (int)Analytics::performQuery(
-          $period,
-          'ga:pageviews',
-          [
-            'filters' => 'ga:pagePath==' . $entry->url()
-          ]
-        )->totalsForAllResults['ga:pageviews'];
-        $this->cache->put($key, $hits, $this->getConfig('page_hits_cache_time', 1440));
+        try {
+          $hits = (int)Analytics::performQuery(
+            $period,
+            'ga:pageviews',
+            [
+              'filters' => 'ga:pagePath==' . $entry->url()
+            ]
+          )->totalsForAllResults['ga:pageviews'];
+          $this->cache->put($key, $hits, $this->getConfig('page_hits_cache_time', 1440));
+        } catch (\Exception $e) {
+          $hits = 0;
+          Log::error($e);
+          return false;
+        }
       }
-      
+
       return $hits;
     });
   }
