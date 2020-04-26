@@ -580,7 +580,7 @@ Vue.component('google-analytics-table', {
             </div>`,
   computed: {
     query() {
-      return '?startDate=' + this.startDate + '&endDate=' + this.endDate;
+      return this.dateQuery;
     },
   },
   methods: {
